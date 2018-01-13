@@ -42,6 +42,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // 开发的时候设置true，用于查看实时性能指标
         sceneView.showsStatistics = true
+        
+        // 展示坐标系
+        sceneView.debugOptions = ARSCNDebugOptions.showWorldOrigin
+        
+        // 特征点
+        sceneView.debugOptions = ARSCNDebugOptions.showFeaturePoints
     }
     
     
@@ -58,6 +64,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // 用位置和文本信息，创建一个SceneKti平面来可视化平面锚点
         let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height:CGFloat(planeAnchor.extent.z))
+        plane.firstMaterial?.diffuse.contents = UIColor.red
         let planeNode = SCNNode(geometry:plane)
         planeNode.simdPosition = float3(planeAnchor.center.x, 0, planeAnchor.center.z)
         
@@ -66,6 +73,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // 半透明设置
         planeNode.opacity = 0.2048
+        
         
         // 添加到aRKit管理节点，当平面被估计为连续的（扩展）的时候，能够追踪到平面的锚点
         node .addChildNode(planeNode)
